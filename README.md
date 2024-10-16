@@ -3,4 +3,4 @@ This repository serves the goal of showing a simple and classic machine learning
 
 # Example: Digit recognition using the MNIST data set  
 notebook: MNIST_digitrecognition.ipynb  
-This notebooks shows with the usage of a convolutional network that handwrittens number can be identified.   
+This notebooks shows with the usage of a convolutional network that handwritten numbers can be identified.   

@@ -1,8 +1,28 @@
 import torch.nn as nn
 import torch.nn.functional as F
+import torch
 
 
-class CNN_digitrec(nn.Module): #batch size does not matter for size, due to tensors. 
+
+class SWEM(nn.Module):
+    def __init__(self, vocab_size, embedding_size, hidden_dim, num_outputs):
+        super().__init__()
+        self.embedding = nn.Embedding(vocab_size, embedding_size)
+        
+        self.fc1 = nn.Linear(embedding_size, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, num_outputs)
+    def forward(self, x):
+        embed = self.embedding(x) #returns an embedding for each word
+        embed_mean = torch.mean(embed, dim=1) # we take the mean embedding per review 
+        h = self.fc1(embed_mean)
+        h = F.relu(h)
+        h = self.fc2(h)
+        return h
+
+
+
+
+class CNN_digitrec(nn.Module): 
     def __init__(self):
         super().__init__()
         
@@ -19,3 +39,21 @@ class CNN_digitrec(nn.Module): #batch size does not matter for size, due to tens
         x = self.lin(x)
         return x   
 
+
+
+class CNN_safarirec(nn.Module): 
+    def __init__(self):
+        super().__init__()
+        
+        self.conv = nn.Conv2d(3, 32, kernel_size=3)
+        self.lin = nn.Linear(64*64*32, 90)
+
+    def forward(self, x):
+        # conv layer 
+        x = self.conv(x)
+        x = F.relu(x)
+
+        # lin layer 
+        x = x.view(-1, 64*64*32) 
+        x = self.lin(x)
+        return x   

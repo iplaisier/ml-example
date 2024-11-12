@@ -57,20 +57,3 @@ class CNN_digitrec(nn.Module):
         return x   
 
 
-
-class CNN_safarirec(nn.Module): 
-    def __init__(self):
-        super().__init__()
-        
-        self.conv = nn.Conv2d(3, 32, kernel_size=3)
-        self.lin = nn.Linear(64*64*32, 90)
-
-    def forward(self, x):
-        # conv layer 
-        x = self.conv(x)
-        x = F.relu(x)
-
-        # lin layer 
-        x = x.view(-1, 64*64*32) 
-        x = self.lin(x)
-        return x   

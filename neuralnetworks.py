@@ -18,7 +18,7 @@ class RNN(nn.Module):
 
     def forward(self, x):
         embed = self.embedding(x) #returns an embedding for each word
-        hidden_state = torch.zeros(1, embed.size(0), self.hidden_size)#.to(self.device)
+        hidden_state = torch.zeros(1, embed.size(0), self.hidden_size)
         h, _ = self.rnn(embed, hidden_state)
         h = h[:, -1, :]
         h = self.fc3(h)

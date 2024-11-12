@@ -4,6 +4,26 @@ import torch
 
 
 
+
+
+
+class RNN(nn.Module):
+    def __init__(self, vocab_size, embedding_size, hidden_dim, num_outputs, hidden_size):
+        super().__init__()
+        self.hidden_size = hidden_size
+        self.embedding = nn.Embedding(vocab_size, embedding_size)
+        
+        self.rnn = nn.RNN(embedding_size, hidden_size, batch_first = True)
+        self.fc3 = nn.Linear(hidden_size, num_outputs)
+
+    def forward(self, x):
+        embed = self.embedding(x) #returns an embedding for each word
+        hidden_state = torch.zeros(1, embed.size(0), self.hidden_size)#.to(self.device)
+        h, _ = self.rnn(embed, hidden_state)
+        h = h[:, -1, :]
+        h = self.fc3(h)
+        return h
+
 class SWEM(nn.Module):
     def __init__(self, vocab_size, embedding_size, hidden_dim, num_outputs):
         super().__init__()
@@ -18,9 +38,6 @@ class SWEM(nn.Module):
         h = F.relu(h)
         h = self.fc2(h)
         return h
-
-
-
 
 class CNN_digitrec(nn.Module): 
     def __init__(self):

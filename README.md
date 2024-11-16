@@ -1,6 +1,10 @@
 
 This repository serves the goal of showing a simple and classic machine learning example, to indicate my ability of the usage of PyTorch. 
 
+# Example: Hamburg temperature prediction 
+notebook: Weather_forecasting.ipynb  
+
+
 # Example: Review classification of the AG news data set 
 notebook: AGnews_classification.ipynb  
 This notebook identifies the topic of a review. 
